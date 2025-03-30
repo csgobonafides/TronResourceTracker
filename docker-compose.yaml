@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  trt:
+    container_name: app
+    build: ./
+    environment:
+      DB_PATH: $DB_PATH
+    ports:
+      - '8000:8000'
+    restart: always
+
+  dbtrt:
+    image: postgres:latest
+    container_name: databasetrt
+    environment:
+      POSTGRES_USER: $DB__USERNAME
+      POSTGRES_PASSWORD: $DB__PASSWORD
+      POSTGRES_DB: $DB__NAME
+      POSTGRES_PORT: 5432
+    ports:
+      - "6432:5432"
+    volumes:
+      - pgdata2:/var/lib/postgresql/data
+
+volumes:
+  pgdata2:
