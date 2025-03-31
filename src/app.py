@@ -2,11 +2,11 @@ from fastapi import FastAPI
 import logging
 from contextlib import asynccontextmanager
 
-from api.trons import router as tron_router
+from tron.api.trons import router as tron_router
 from core.settings import get_settings
 from db.connector import DatabaseConnector
-from clients.tron_account import TronAccount
-import controller.tron_control as tron_modul
+from tron.clients.tron_account import TronAccount
+import tron.controller.tron_control as tron_modul
 
 logger = logging.getLogger(__name__)
 config =get_settings()

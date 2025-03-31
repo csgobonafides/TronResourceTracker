@@ -4,8 +4,8 @@ services:
   trt:
     container_name: app
     build: ./
-    environment:
-      DB_PATH: $DB_PATH
+    env_file:
+      - .env
     ports:
       - '8000:8000'
     restart: always

@@ -4,8 +4,8 @@ from sqlalchemy import select
 from core.exceptions import BadRequestError
 from db.connector import DatabaseConnector
 from db.models import WalletInfo
-from clients.tron_account import TronAccount
-from schemas.tron import TronDtlInfo, TronFullInfo
+from tron.clients.tron_account import TronAccount
+from tron.schemas.tron import TronDtlInfo, TronFullInfo
 
 
 class TronController:
