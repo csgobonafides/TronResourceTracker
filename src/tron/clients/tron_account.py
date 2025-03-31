@@ -1,15 +1,18 @@
 import asyncio
+from concurrent.futures import ThreadPoolExecutor
+
 from tronpy import Tron
 from tronpy.exceptions import AddressNotFound
+
 from core.exceptions import NotFoundError
-from schemas.tron import TronResponse
+from tron.schemas.tron import TronResponse
 
 
 class TronAccount:
     def __init__(self):
         self.client = Tron()
         self.loop = asyncio.get_event_loop()
-        self.executor = self.loop.run_in_executor
+        self.executor = ThreadPoolExecutor()
 
     async def get_account_info(self, address: str) -> TronResponse:
         try:
@@ -30,8 +33,8 @@ class TronAccount:
         except Exception as ex:
             raise ex
 
-    async def _get_account_balance(self, address: str):
-        return await self.executor(None, self.client.get_account_balance, address)
+    async def _get_account_balance(self, address: str) -> float:
+        return float(await self.loop.run_in_executor(self.executor, self.client.get_account_balance, address))
 
-    async def _get_account_resource(self, address: str):
-        return await self.executor(None, self.client.get_account_resource, address)
+    async def _get_account_resource(self, address: str) -> dict:
+        return await self.loop.run_in_executor(self.executor, self.client.get_account_resource, address)

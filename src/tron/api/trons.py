@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, status
 import logging
 
-from controller.tron_control import get_controller, TronController
-from schemas.tron import TronDtlInfo, TronFullInfo
+from tron.controller.tron_control import get_controller, TronController
+from tron.schemas.tron import TronDtlInfo, TronFullInfo, TronRequest
 
 
 router = APIRouter()
@@ -11,10 +11,10 @@ logger =logging.getLogger('tron_api')
 
 @router.post('/', response_model=TronDtlInfo, status_code=status.HTTP_201_CREATED)
 async def account_resource(
-        address: str,
+        address: TronRequest,
         controller: TronController = Depends(get_controller)
 ) -> TronDtlInfo:
-    return await controller.add_resource(address=address)
+    return await controller.add_resource(address=address.address)
 
 
 @router.get('/', response_model=list[TronFullInfo], status_code=status.HTTP_200_OK)

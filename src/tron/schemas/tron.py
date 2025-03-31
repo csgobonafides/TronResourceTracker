@@ -1,11 +1,12 @@
 from pydantic import BaseModel, UUID4
+from typing import Optional
 
 
 class TronResponse(BaseModel):
     wallet_address: str
-    balance: float
-    bandwidth: int
-    energy: int
+    balance: Optional[float] = 0
+    bandwidth: Optional[int] = 0
+    energy: Optional[int] = 0
 
 
 class TronDtlInfo(TronResponse):
@@ -14,3 +15,7 @@ class TronDtlInfo(TronResponse):
 
 class TronFullInfo(TronDtlInfo):
     create_at: str
+
+
+class TronRequest(BaseModel):
+    address: str
