@@ -27,6 +27,7 @@ class Settings(BaseSettings):
         case_sensitive = True
         env_nested_delimiter = "__"
         env_file = ".env"
+        extra = "ignore"
 
 
 def get_settings() -> Settings:
