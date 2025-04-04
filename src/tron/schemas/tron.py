@@ -1,10 +1,11 @@
+from decimal import Decimal
 from pydantic import BaseModel, UUID4
-from typing import Optional
+from typing import Optional, Union
 
 
 class TronResponse(BaseModel):
     wallet_address: str
-    balance: Optional[float] = 0
+    balance: Optional[Union[float, Decimal]] = 0
     bandwidth: Optional[int] = 0
     energy: Optional[int] = 0
 

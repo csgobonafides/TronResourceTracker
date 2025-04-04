@@ -5,7 +5,7 @@ from core.exceptions import BadRequestError
 from db.connector import DatabaseConnector
 from db.models import WalletInfo
 from tron.clients.tron_account import TronAccount
-from tron.schemas.tron import TronDtlInfo, TronFullInfo
+from tron.schemas.tron import TronDtlInfo, TronFullInfo, TronResponse
 
 
 class TronController:
@@ -15,8 +15,16 @@ class TronController:
         self.tron = tron
 
 
-    async def add_resource(self, address: str) -> TronDtlInfo:
-        account_info = await self.tron.get_account_info(address=address)
+    async def check_and_add_resource(self, address: str) -> TronDtlInfo:
+        tron_resource = await self.get_account_information(address=address)
+        return await self.add_resource(address=address, tron_response=tron_resource)
+
+
+    async def get_account_information(self, address: str) -> TronResponse:
+        return await self.tron.get_account_info(address=address)
+
+
+    async def add_resource(self, address: str, tron_response: TronResponse) -> TronDtlInfo:
 
         resource_id = uuid.uuid4()
 
@@ -25,9 +33,9 @@ class TronController:
                 trn = WalletInfo(
                     resource_id=resource_id,
                     wallet_address=address,
-                    balance=account_info.balance,
-                    bandwidth=account_info.bandwidth,
-                    energy=account_info.energy
+                    balance=tron_response.balance,
+                    bandwidth=tron_response.bandwidth,
+                    energy=tron_response.energy
                 )
                 session.add(trn)
                 await session.commit()
@@ -36,9 +44,9 @@ class TronController:
         return TronDtlInfo(
             resource_id=resource_id,
             wallet_address=address,
-            balance=account_info.balance,
-            bandwidth=account_info.bandwidth,
-            energy=account_info.energy
+            balance=tron_response.balance,
+            bandwidth=tron_response.bandwidth,
+            energy=tron_response.energy
         )
 
 
