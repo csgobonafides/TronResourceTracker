@@ -14,7 +14,7 @@ async def account_resource(
         address: TronRequest,
         controller: TronController = Depends(get_controller)
 ) -> TronDtlInfo:
-    return await controller.add_resource(address=address.address)
+    return await controller.check_and_add_resource(address=address.address)
 
 
 @router.get('/', response_model=list[TronFullInfo], status_code=status.HTTP_200_OK)
