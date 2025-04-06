@@ -18,7 +18,7 @@ async def test_get_resource_5_10(xclient: AsyncClient, resources: list[WalletInf
 
     assert data == [
         {
-            "balance": resource.balance,
+            "balance": str(resource.balance),
             "bandwidth": resource.bandwidth,
             "energy": resource.energy,
             "resource_id": str(resource.resource_id),
@@ -35,6 +35,7 @@ async def test_get_resource_10_14(xclient: AsyncClient, resources: list[WalletIn
 
     response = await xclient.get("/tron/?page=3&page_size=5")
     data = response.json()
+    print(data)
 
     assert response.status_code == 200
     assert isinstance(data, list)
@@ -42,7 +43,7 @@ async def test_get_resource_10_14(xclient: AsyncClient, resources: list[WalletIn
 
     assert data == [
         {
-            "balance": resource.balance,
+            "balance": str(resource.balance),
             "bandwidth": resource.bandwidth,
             "energy": resource.energy,
             "resource_id": str(resource.resource_id),
