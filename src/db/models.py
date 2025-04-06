@@ -13,7 +13,7 @@ class WalletInfo(BaseModel):
     __tablename__ = "wallet_info"
 
     wallet_address = Column(String(50), nullable=False)
-    balance = Column(DECIMAL(50, 10), nullable=False)
+    balance = Column(DECIMAL(50, 2), nullable=False)
     bandwidth = Column(INT, nullable=False)
     energy = Column(INT, nullable=False)
 

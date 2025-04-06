@@ -1,4 +1,3 @@
-from datetime import timezone, datetime
 from uuid import UUID, uuid4
 
 import pytest

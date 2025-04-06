@@ -1,10 +1,7 @@
 from decimal import Decimal
-from uuid import uuid4
-
 import pytest
 from httpx import AsyncClient
 from unittest.mock import ANY
-
 from sqlalchemy import select
 
 from db.models import WalletInfo
@@ -37,3 +34,32 @@ async def test_add_method(test_db: DatabaseConnector, tron_controller: tron_modu
         assert info_wallet.wallet_address == addres
         assert info_wallet.resource_id == ANY
         assert info_wallet.create_at == ANY
+
+
+@pytest.mark.asyncio
+@pytest.mark.usefixtures("prepare_tron")
+async def test_add_endpoint_201(xclient: AsyncClient, test_db: DatabaseConnector, resources: WalletInfo):
+    '''
+    Тест может выдать код ответа 401, нужно попробовать еще раз.
+    Это происходит из-за ограничений API Tron.
+    '''
+
+    payload = {"address": "TUjx6w55Nx9G4GjjRNEB4e7w5BUH3WmJTZ"}
+
+    response = await xclient.post("/tron/", json=payload)
+
+    assert response.status_code == 201
+
+    response_data = response.json()
+
+    assert "wallet_address" in response_data
+    assert "balance" in response_data
+    assert "bandwidth" in response_data
+    assert "energy" in response_data
+    assert "resource_id" in response_data
+
+    assert isinstance(response_data["wallet_address"], str)
+    assert isinstance(response_data["balance"], (int, float))
+    assert isinstance(response_data["bandwidth"], int)
+    assert isinstance(response_data["energy"], int)
+    assert isinstance(response_data["resource_id"], str)
