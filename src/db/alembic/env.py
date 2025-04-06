@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from alembic import context
-from src.db.models import BaseModel
-from src.core.settings import get_settings
+from db.models import BaseModel
+from core.settings import get_settings
 
 settings = get_settings()
 target_metadata = BaseModel.metadata

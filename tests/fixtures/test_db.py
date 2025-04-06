@@ -13,7 +13,6 @@ from db.connector import DatabaseConnector
 
 
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent.parent / "src"
-PATH_ALEMBIC_INI = Path(__file__).resolve(strict=True).parent.parent.parent
 
 @pytest.fixture(scope="session")
 def database_name() -> str:
