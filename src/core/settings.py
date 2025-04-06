@@ -1,4 +1,7 @@
 from pydantic_settings import BaseSettings
+from pathlib import Path
+
+path = Path(__file__).parent.parent.parent
 
 
 class DatabaseConfig(BaseSettings):
@@ -26,7 +29,7 @@ class Settings(BaseSettings):
     class Config:
         case_sensitive = True
         env_nested_delimiter = "__"
-        env_file = ".env"
+        env_file = path / ".env"
         extra = "ignore"
 
 
