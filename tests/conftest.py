@@ -2,12 +2,12 @@ import pytest
 import pytest_asyncio
 from httpx import AsyncClient, ASGITransport
 
-import tron.controller.tron_control as tron_modul
+import tron.controller as tron_modul
 from app import app
 
 from core.settings import get_settings, Settings
 from db.connector import DatabaseConnector
-from tron.clients.tron_account import TronAccount
+from tron.tron_client import TronAccount
 
 pytest_plugins = [
     "fixtures.test_db",

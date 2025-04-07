@@ -5,7 +5,7 @@ from tronpy import Tron
 from tronpy.exceptions import AddressNotFound
 
 from core.exceptions import NotFoundError
-from tron.schemas.tron import TronResponse
+from tron.schemas import TronResponse
 
 
 class TronAccount:
