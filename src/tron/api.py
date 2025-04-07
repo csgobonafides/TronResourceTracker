@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, status
 import logging
 
-from tron.controller.tron_control import get_controller, TronController
-from tron.schemas.tron import TronDtlInfo, TronFullInfo, TronRequest
+from tron.controller import get_controller, TronController
+from tron.schemas import TronDtlInfo, TronFullInfo, TronRequest
 
 
 router = APIRouter()

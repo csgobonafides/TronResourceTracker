@@ -6,8 +6,8 @@ from sqlalchemy import select
 
 from db.models import WalletInfo
 from db.connector import DatabaseConnector
-from tron.schemas.tron import TronResponse
-import tron.controller.tron_control as tron_modul
+from tron.schemas import TronResponse
+import tron.controller as tron_modul
 
 
 @pytest.mark.asyncio
